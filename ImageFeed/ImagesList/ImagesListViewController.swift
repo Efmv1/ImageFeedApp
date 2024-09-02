@@ -1,6 +1,10 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
+    // MARK: - Outlets
+    @IBOutlet private weak var tableView: UITableView!
+    
+    // MARK: - Private Properties
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     
     private lazy var dateFormatter: DateFormatter = {
@@ -10,15 +14,14 @@ final class ImagesListViewController: UIViewController {
         return formatter
     }()
     
-    @IBOutlet private var tableView: UITableView!
-    
-    
+    // MARK: - View Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
     }
     
+    // MARK: - Public Methods
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         guard let posterImage = UIImage(named: photosName[indexPath.row]) else { return }
         
@@ -36,6 +39,8 @@ final class ImagesListViewController: UIViewController {
     }
 }
 
+
+// MARK: - UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -54,6 +59,7 @@ extension ImagesListViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photosName.count
