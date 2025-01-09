@@ -2,7 +2,35 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
     // MARK: - Private Properties
-    private var imageView = UIImageView()
+    private var imageView: UIImageView = {
+        let image = UIImage(named: "profilePhoto")
+        let view = UIImageView(image: image)
+        return view
+    }()
+    
+    private var nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Екатерина Новикова"
+        label.textColor = .ypWhite
+        label.font = .boldSystemFont(ofSize: 23)
+        return label
+    }()
+    
+    private var nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "@ekaterina_nov"
+        label.textColor = .ypGray
+        label.font = .systemFont(ofSize: 13)
+        return label
+    }()
+    
+    private var statusLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Hello, world!"
+        label.textColor = .ypWhite
+        label.font = .systemFont(ofSize: 13)
+        return label
+    }()
     
     // MARK: - View Life Cycles
     override func viewDidLoad() {
@@ -12,48 +40,26 @@ final class ProfileViewController: UIViewController {
     
     // MARK: - Private Methods
     private func presentProfilePhoto() {
-        imageView.image = UIImage(named: "profilePhoto")
+        [imageView, nameLabel, nicknameLabel, statusLabel].forEach{
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview($0)
+        }
         
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        
-        imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
-        
-        let nameLabel = UILabel()
-        nameLabel.text = "Екатерина Новикова"
-        nameLabel.textColor = .ypWhite
-        nameLabel.font = .boldSystemFont(ofSize: 23)
-        
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(nameLabel)
-        
-        nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
-        
-        let nicknameLabel = UILabel()
-        nicknameLabel.text = "@ekaterina_nov"
-        nicknameLabel.textColor = .ypGray
-        nicknameLabel.font = .systemFont(ofSize: 13)
-        
-        nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(nicknameLabel)
-        
-        nicknameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
-        nicknameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
-        
-        let statusLabel = UILabel()
-        statusLabel.text = "Hello, world!"
-        statusLabel.textColor = .ypWhite
-        statusLabel.font = .systemFont(ofSize: 13)
-        
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(statusLabel)
-        
-        statusLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
-        statusLabel.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 8).isActive = true
+        NSLayoutConstraint.activate([
+            imageView.heightAnchor.constraint(equalToConstant: 70),
+            imageView.widthAnchor.constraint(equalToConstant: 70),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
+            
+            nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
+            
+            nicknameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+            nicknameLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
+            
+            statusLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+            statusLabel.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 8)
+        ])
         
         let exitButton = UIButton.systemButton(with: UIImage(named: "exitPicture") ?? UIImage(),
                                                target: self,
